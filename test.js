@@ -8,8 +8,8 @@ var host = 'fix-order.london-demo.lmax.com';
 var port = 443;
 var username = '';
 var password = '';
-var trargetCompID  = 'LMXBD';
-//var trargetCompID  = 'LMXBDM';
+var targetCompID  = 'LMXBD';
+//var targetCompID  = 'LMXBDM';
 
 var protocol = new FixProtocol();
 
@@ -20,7 +20,7 @@ var loginMessage = protocol.encode({
     MsgSeqNum:       protocol.seqNum(),
     SenderCompID:    username,
     SendingTime:     moment().format("YYYYMMDD-HH:mm:ss"),
-    TargetCompID:    trargetCompID,
+    TargetCompID:    targetCompID,
     Username:        username,
     Password:        password,
     EncryptMethod:   0,
@@ -41,7 +41,7 @@ var quoteMessage = protocol.encode({
     // will close the connection, I'm using momentjs to
     // have my time match the engine time
     SendingTime:             moment().format("YYYYMMDD-HH:mm:ss"),
-    TargetCompID:            trargetCompID,
+    TargetCompID:            targetCompID,
     MDReqID:                 'EURUSD',
     SubscriptionRequestType: 1,
     MarketDepth:             1,
@@ -61,20 +61,22 @@ var orderMessage = protocol.encode({
     // it will be replaced with actual length
     BodyLength:              '%l',
     MsgType:                 'D',
-    MsgSeqNum:               protocol.seqNum(),
+    MsgSeqNum:               2,
     // username
     SenderCompID:            username,
     SendingTime:             moment().format("YYYYMMDD-HH:mm:ss"),
-    TargetCompID:            trargetCompID,
-    ClOrdID:                 123434,
-    MDReqID:                 'XBMJPY',
-    SecurityID:              100942,
-    Side:                    1,
+    TargetCompID:            targetCompID,
+    ClOrdID:                 86868740,
+    //MDReqID:                 'EURUSD',
+    ExecInst:                'H',
+    SecurityID:              4001,
+    SecurityIDSource:        8,
+    Side:                    2,
     ExecInst:                 'H',
-    SecurityIDSource:           8,
-    OrderQty:                   100,
-    OrdType:                    1,
+    OrderQty:                   50,
+    OrdType:                    2,
     TimeInForce:                0,
+    Price:                   1.05761, // set the price
     TransactTime:              moment().format("YYYYMMDD-HH:mm:ss")              
 
 }, true);
@@ -111,7 +113,7 @@ cleartextStream.on('data', function (data) {
             MsgSeqNum:    protocol.seqNum(),
             SenderCompID: 'antony2kx',
             SendingTime:  moment().format("YYYYMMDD-HH:mm:ss.SSS"),
-            TargetCompID: 'LMXBDM',
+            TargetCompID: targetCompID,
             TestReqID:    data.TestReqID
         }, true);
 
